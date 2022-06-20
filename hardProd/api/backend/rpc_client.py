@@ -1,6 +1,7 @@
 import pika
 import uuid
 
+
 class FibonacciRpcClient(object):
 
     def __init__(self):
@@ -35,4 +36,21 @@ class FibonacciRpcClient(object):
             body=str(n))
         while self.response is None:
             self.connection.process_data_events()
-        return int(self.response)
+            # Conn.process - data - events() or conn.sleep()
+            # heartbeat
+        return self.response
+
+    def call_create_session(self, user, password):
+            self.response = None
+            # password = base64.b64encode(password)
+            self.corr_id = str(uuid.uuid4())
+            self.channel.basic_publish(exchange='',
+                                       routing_key='rpc_queue_login',
+                                       properties=pika.BasicProperties(
+                                           reply_to=self.callback_queue,
+                                           correlation_id=self.corr_id,
+                                       ),
+                                       body=user + "," + password)
+            while self.response is None:
+                self.connection.process_data_events()
+            return self.response
