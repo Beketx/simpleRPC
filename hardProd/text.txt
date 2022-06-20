@@ -1,0 +1,17 @@
+MY BACKEND
+Commands
+Start backend (you can start multiple instances)
+python rpc_server.py
+Start FastAPI endpoint
+uvicorn endpoint:app --reload
+http://127.0.0.1:8000/api/v1/fibonacci/docs
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 8080:15672 rabbitmq:3-management
+ps aux | grep python
+systemctl stop rabbitmq-server
+sudo kill -9 179280
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+
+    sudo apt-get install rabbitmq-server
+    sudo systemctl start rabbitmq-server
+    sudo systemctl enable rabbitmq-server
